@@ -12,8 +12,8 @@
 
 
         <li>
-            <a href="{{ route('razas') }}">
-                <i class="mdi mdi-calendar"></i><span>Razas</span>
+            <a href="{{ route('animales') }}">
+                <i class="mdi mdi-calendar"></i><span>Animales</span>
             </a>
         </li>
         <li>
@@ -31,6 +31,12 @@
                 <i class="mdi mdi-calendar"></i><span>Ventas</span>
             </a>
         </li>
+
+        <li>
+            <a href="{{ route('reportes') }}">
+                <i class="mdi-file-restore"></i><span>Reportes</span>
+            </a>
+        </li>   
 
 
 

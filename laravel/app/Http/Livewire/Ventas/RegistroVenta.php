@@ -5,21 +5,24 @@ namespace App\Http\Livewire\Ventas;
 use App\Models\Animal;
 use App\Models\AnimalVenta;
 use App\Models\DetalleVenta;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class RegistroVenta extends Component
 {
     public $i=0, $animales=[], $buscar, $nombreAnimal, $animal_id,
-     $pesoCompra, $pesoActual, $total_fac, $valorKg, $subtotal;
+     $pesoCompra, $pesoActual, $total_fac, $valorKg, $subtotal, $valorCompra;
 
     public $codigoB, $codigo, $comprador, $documento, $fecha;
 
     public $ids=[];
     public $arrayAnimales=[];   
     public $subtotales=[]; 
-    public $pesos=[]; 
-    public $valores=[]; 
+    public $pesosCompras=[]; 
+    public $pesosVentas=[]; 
+    public $valoresCompra=[]; 
+    public $valoresVenta=[]; 
 
     public $inputsearchsupplier = '';
     public $supplier_id;
@@ -33,12 +36,15 @@ class RegistroVenta extends Component
         $this->animal_id = $animal->id;
         $this->nombreAnimal = $animal->nombre;      
         $this->pesoCompra = $animal->peso;      
+        $this->valorCompra = $animal->compra->valor;      
         $this->terms = '';
         $this->inputsearchsupplier='';
     }
     
     public function render()
     {
+        $date = Carbon::now();        
+        $this->fecha=$date;
         if(!empty($this->buscar)){
             $this->animales=Animal::consultar($this->buscar);
         }
@@ -52,9 +58,9 @@ class RegistroVenta extends Component
        }
        $searchsuppliers = [];
         if(strlen($this->inputsearchsupplier)>=2){
-            $searchsuppliers = Animal::where('nombre', 'LIKE' , '%'.$this->inputsearchsupplier.'%')->get();
+            $searchsuppliers = Animal::filtro($this->inputsearchsupplier);
         }
-        return view('livewire.ventas.registro-venta', compact('searchsuppliers'));
+        return view('livewire.ventas.registro-venta', compact('searchsuppliers', ));
     }
 
     public function seleccionar($valor){
@@ -75,6 +81,8 @@ class RegistroVenta extends Component
         $this->pesoCompra='';
         $this->subtotal='';
         $this->pesoActual='';       
+        $this->valorCompra='';       
+        $this->valorKg='';       
 
     }
     private function resetInput(){
@@ -104,10 +112,12 @@ class RegistroVenta extends Component
         $this->i = $i;       
 
             array_push($this->ids ,$this->animal_id);
-            array_push($this->pesos ,$this->pesoActual);
+            array_push($this->pesosVentas ,$this->pesoActual);
+            array_push($this->pesosCompras ,$this->pesoCompra);
             array_push($this->arrayAnimales ,$this->nombreAnimal);
             array_push($this->subtotales , $this->subtotal);     
-            array_push($this->valores , $this->valorKg);     
+            array_push($this->valoresVenta , $this->valorKg);     
+            array_push($this->valoresCompra , $this->valorCompra);     
 
             $this->total_fac=array_sum($this->subtotales);            
             $this->resetInput1();
@@ -116,9 +126,11 @@ class RegistroVenta extends Component
     public function remove($i)
     {
         unset($this->ids[$i] );
-        unset($this->pesos[$i] );
-        unset($this->arrayAnimales[$i]);
-        unset($this->valores[$i]);       
+        unset($this->pesosVentas[$i] );
+        unset($this->pesosCompras[$i]);
+        unset($this->valoresVenta[$i]);       
+        unset($this->valoresVenta[$i]);       
+        unset($this->valoresCompra[$i]);       
         unset($this->subtotales[$i]);       
         $this->total_fac=array_sum($this->subtotales);
 
@@ -148,6 +160,7 @@ class RegistroVenta extends Component
                     'fecha' =>  ($this->fecha),             
                                    
                 ]);
+                $total=0;
                 for ($x = 0; $x <count($this->ids); $x++) {
                     DetalleVenta::updateOrCreate(
                         ['venta_id' =>  ($venta->id),
@@ -156,10 +169,15 @@ class RegistroVenta extends Component
                             'animal_id'=> ($this->ids[$x]),
                             'venta_id'=> ($venta->id),
                             'valor'=> ($this->subtotales[$x]),
-                            'valorkg'=> ($this->valores[$x]),
-                            'peso'=> ($this->pesos[$x]),                                    
+                            'valorkg'=> ($this->valoresVenta[$x]),
+                            'peso'=> ($this->pesosVentas[$x]),                                    
                         ]);
-                }                
+                    $total+=$this->subtotales[$x];
+                    Animal::find($this->ids[$x])->update(['estado' => 2]);
+                   
+                }
+                $venta->total=$total;
+                $venta->save();
             DB::commit();                 
             $this->resetInput();
             $this->emit('closeModal');

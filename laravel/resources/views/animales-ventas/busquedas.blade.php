@@ -1,12 +1,12 @@
 @extends('theme.main')
 @section('titulo')
-    ENTIDADES
+   BUSCAR VENTAS
 @endsection
 @section('pagina')
-    MODULO DE ENTIDADES
+    BUSCAR  VENTAS
 @endsection
 @section('content')
-<livewire:entidades.entidades />
+<livewire:ventas.busquedas />
 
 @endsection
 

@@ -6,7 +6,7 @@
         <a href="{{ route('home') }}" class="logo">
             <span>
                     <img src="{{ asset('theme/assets/images/logo-sm.png') }}" alt="logo-large" class="mt-1" width="40px">
-                    <h6 style="color: white"><b>ADMIN SINSAFE</b></h6>
+                    <h6 style="color: white"><b>GANADERIA LA MAREA</b></h6>
             </span>
         </a>
     </div>

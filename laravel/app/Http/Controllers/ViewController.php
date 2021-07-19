@@ -28,9 +28,11 @@ class ViewController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function entidades()
+    
+
+    public function animales()
     {
-        return view('entidades.index');
+        return view('animales.index');
     }
 
     public function razas()
@@ -42,10 +44,24 @@ class ViewController extends Controller
     {
         return view('animales-compras.index');
     }
+    public function comprasCrear()
+    {
+        return view('animales-compras.crear');
+    }
+
 
     public function ventas()
     {
         return view('animales-ventas.index');
+    }
+    public function consultarVentas()
+    {
+        return view('animales-ventas.detalles');
+    }
+
+    public function busquedas()
+    {
+        return view('animales-ventas.busquedas');
     }
 
     public function potreros()

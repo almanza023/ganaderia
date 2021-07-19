@@ -6,7 +6,7 @@
     MODULO DE COMPRA ANIMALES
 @endsection
 @section('content')
-<livewire:animales-compras.compras />
+<livewire:animales-compras.registro-compras />
 
 @endsection
 

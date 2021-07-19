@@ -18,7 +18,7 @@
                         <h3 class="text-center m-0">
                            <center>
                             <a href="{{ route('login') }}" class="logo logo-admin">
-                                <img src="{{ asset('theme/assets/images/logo-sm.png') }}" height="100" width="120" alt="logo" class="my-3">
+                                <img src="{{ asset('theme/assets/images/logo-sm.png') }}" height="150" width="150" alt="logo" class="my-3">
                             </a>
                            </center>
                         </h3>

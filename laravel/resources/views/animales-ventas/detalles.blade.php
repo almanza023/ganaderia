@@ -1,12 +1,12 @@
 @extends('theme.main')
 @section('titulo')
-    COMPRA ANIMALES
+   CONSULTAS VENTAS
 @endsection
 @section('pagina')
-    MODULO DE COMPRA ANIMALES
+    CONSULTA  VENTAS
 @endsection
 @section('content')
-<livewire:animales-compras.compras />
+<livewire:ventas.detalles-venta />
 
 @endsection
 

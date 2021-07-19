@@ -3,7 +3,7 @@
     VENTAS ANIMALES
 @endsection
 @section('pagina')
-    MODULO DE COMPRA VENTAS
+    MODULO DE VENTAS
 @endsection
 @section('content')
 <livewire:ventas.registro-venta />

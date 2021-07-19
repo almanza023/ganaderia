@@ -55,7 +55,7 @@
                                 <div class="form-group row">
                                     <label for="example-text-input" class="col-sm-4 col-form-label">Documento</label>
                                     <div class="col-sm-8">
-                                        <input required wire:model.defer="documento" class="form-control" type="number" value="" placeholder="Documento" min="0">
+                                        <input  required wire:model.defer="documento" class="form-control" type="number" value="" placeholder="Documento" min="0">
                                     </div>
                                 </div>                            
                         </div> 
@@ -88,43 +88,24 @@
                             <div class="form-group row">
                                 <label for="example-month-input" class="col-sm-3 col-form-label">Animal</label>
                                 <div class="col-sm-9">
-                                    <input  wire:model.defer="nombreAnimal" class="form-control" type="text" >
+                                    <input readonly  wire:model.defer="nombreAnimal" class="form-control" type="text" >
                                   
                                 </div>                              
-                            </div>   
-                            <div class="form-group row">
-                                <label for="example-text-input" class="col-sm-4 col-form-label">Peso Compra</label>
-                                <div class="col-sm-8">
-                                    <input readonly wire:model.defer="pesoCompra" class="form-control" type="number" value="" placeholder="Peso Compra" min="0">
-                                </div>
-                            </div>        
-                                          
-                           
-                           
-                               
-                              
-                            
+                            </div>    
                                                  
                         </div>  
-                        <div class="col-sm-12 col-lg-4">
-                                                       
-                               
+                        <div class="col-sm-12 col-lg-4">                                                                                      
                                 <div class="form-group row">
-                                    <label for="example-text-input" class="col-sm-4 col-form-label">Valor KG</label>
+                                    <label for="example-text-input" class="col-sm-4 col-form-label">Valor KG Venta</label>
                                     <div class="col-sm-8">
                                         <input  wire:model="valorKg" class="form-control" type="number" value="" placeholder="Valor" min="0">
                                     </div>
-                                </div>     
-                                
-                                
-                                
-                               
-                            
+                                </div>                     
                         </div> 
                         <div class="col-sm-12 col-lg-4">                            
                             
                             <div class="form-group row">
-                                <label for="example-text-input" class="col-sm-4 col-form-label">Peso Actual</label>
+                                <label for="example-text-input" class="col-sm-4 col-form-label">Peso Venta</label>
                                 <div class="col-sm-8">
                                     <input  wire:model="pesoActual" class="form-control" type="number" value="" placeholder="Peso Actual" min="0">
                                 </div>
@@ -154,8 +135,12 @@
                 <thead>
                     <tr>
                         <th>ANIMAL</th>                                         
-                        <th>PESO</th>                   
-                        <th>VALOR KG($)</th>                   
+                        <th>PESO COMPRA</th>  
+                        <th>PESO VENTA</th>    
+                        <th>DIF</th>                 
+                        <th>VALOR KG COMPRA($)</th>                                        
+                        <th>VALOR KG VENTA($)</th>    
+                        <th>DIF</th>                
                         <th>SUBTOTAL ($)</th>                   
                         <th></th>
                     </tr>
@@ -165,8 +150,12 @@
                   @foreach ($ids as $key => $value)
                   <tr>    
                       <td>{{ $arrayAnimales[$key] }}</td>
-                      <td>${{ number_format($pesos[$key]) }}</td>                    
-                      <td>${{ number_format($valores[$key]) }}</td>                    
+                      <td>{{ number_format($pesosCompras[$key]) }}</td>
+                      <td>{{ number_format($pesosVentas[$key]) }}</td>   
+                      <td>{{ number_format($pesosVentas[$key]-$pesosCompras[$key]) }}</td>   
+                      <td>${{ number_format($valoresCompra[$key]) }}</td>                                      
+                      <td>${{ number_format($valoresVenta[$key]) }}</td>                    
+                      <td>${{ number_format($valoresVenta[$key] - $valoresCompra[$key]) }}</td>                    
                       <td>${{ number_format($subtotales[$key]) }}</td>                    
                       <td><button type="button" class="btn btn-danger btn-sm" wire:click.prevent="remove({{$key}})">
                       -</button>                    

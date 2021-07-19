@@ -43,7 +43,11 @@ class Animal extends Model
     
     public function compra()
     {
-        return $this->hasOne('App\Models\AnimalCompra', 'id', 'animal_id');
+        return $this->belongsTo('App\Models\AnimalCompra', 'id', 'animal_id');
+    }
+
+    public static function filtro($term){
+        return Animal::where('nombre', 'LIKE' , '%'.$term.'%')->where('estado', 1)->get();
     }
     
 
